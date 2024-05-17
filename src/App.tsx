@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Container from "./components/Layout/Container";
+import Toggle from "./components/Toggle";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [enabled1, setEnabled1] = useState(false);;
+	const [enabled2, setEnabled2] = useState(false);;
+	const [enabled3, setEnabled3] = useState(false);;
+
+	return (
+		<Container>
+			<Toggle enabled={enabled1} setEnabled={setEnabled1}/>
+			<Toggle enabled={enabled2} setEnabled={setEnabled2}/>
+			<Toggle enabled={enabled3} setEnabled={setEnabled3}/>
+		</Container>
+	);
 }
 
 export default App;
