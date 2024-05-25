@@ -9,20 +9,35 @@ export type User = {
     id: string
 } | null;
 
+export const events = {
+    connection: "connection",
+    setToggle: "setToggle",
+    userJoined: "userJoined",
+    updateUsers: "updateUsers",
+    disconnect: "disconnect"
+}
+
+
 function App() {
     const [currentUser, setCurrentUser] = useState<User>(null);
+    const [users, setCurrentUsers] = useState<User[]>([]);
+
     const nav = useNavigate();
 
-    useEffect(()=>{
-        if(currentUser != null) {
+    useEffect(() => {
+        console.log(currentUser)
+        if (currentUser != null) {
             nav("/game")
+            socket.emit(events.userJoined, currentUser);
+        } else if (currentUser == null) {
+            nav("/")
         }
     }, [currentUser])
 
-    useEffect(()=>{
-        if(currentUser == null) {
-            nav("/")
-        }
+    useEffect(() => {
+        socket.on(events.updateUsers, (newUsers: User[]) => {
+            setCurrentUsers(newUsers);
+        });
     }, [])
 
     const routes = <Routes>
@@ -35,7 +50,7 @@ function App() {
         <Route
             path="/game"
             element={
-                <Game socket={socket} />
+                <Game users={users} socket={socket} />
             }
         />
     </Routes>
