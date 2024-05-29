@@ -6,7 +6,11 @@ import Enter from "./pages/Enter";
 
 export type User = {
     name: string,
-    id: string
+    id: string,
+    socketId: string | null
+    currentVote: string | null,
+    previousVote: string | null,
+    numberOfVotes: number,
 } | null;
 
 export const events = {
@@ -25,14 +29,13 @@ function App() {
     const nav = useNavigate();
 
     useEffect(() => {
-        console.log(currentUser)
         if (currentUser != null) {
             nav("/game")
             socket.emit(events.userJoined, currentUser);
         } else if (currentUser == null) {
             nav("/")
         }
-    }, [currentUser])
+    }, [currentUser, nav])
 
     useEffect(() => {
         socket.on(events.updateUsers, (newUsers: User[]) => {
@@ -50,7 +53,7 @@ function App() {
         <Route
             path="/game"
             element={
-                <Game users={users} socket={socket} />
+                <Game users={users} socket={socket} currentUser={currentUser} />
             }
         />
     </Routes>
