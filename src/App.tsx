@@ -18,7 +18,8 @@ export const events = {
     setToggle: "setToggle",
     userJoined: "userJoined",
     updateUsers: "updateUsers",
-    disconnect: "disconnect"
+    disconnect: "disconnect",
+    gameState: "gameInfo",
 }
 
 
