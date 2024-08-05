@@ -48,15 +48,14 @@ export default function Game({ socket, users, currentUser }: gameProps) {
 
     return (<div>
         <Container>
-            <h2 className="text-center p-4 text-xl">{`time remaining ${gameState?.timeRemaining}`}</h2>
+            <h2 className="text-center p-4 text-xl">{gameState.roundInProgress?`time remaining ${gameState?.timeRemaining}`:""}</h2>
             <button onClick={onClick} type='button' className="bg-east-bay-400 rounded border-2 border-east-bay-600">{gameState.roundInProgress ? "End Round" : "Start Round"}</button>
-            {gameState.roundInProgress &&
                 <>
-                    <h2 className="text-center p-4 text-xl">who is most likely to climb mount everest and then eat a taco at the top while taking a selfie?</h2>
+                    <h2 className="text-center p-4 text-xl"></h2>
                     <ul role="list" className="divide-y divide-gray-100">
                         {users.map((user => <PlayerCard key={user!.id} totalUserCount={users.length} user={user} handleClick={handlePlayerCardClick} />))}
                     </ul>
-                </>}
+                </>
         </Container>
     </div >
     )

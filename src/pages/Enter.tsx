@@ -15,11 +15,13 @@ export default function Enter(props: EnterProps) {
         // TODO: need to add validation
         const userToSave: User = {
             name: currentUserInput,
-            socketId: null, id: uuidv4(),
+            socketId: null, 
+            id: uuidv4(),
             numberOfVotes: 0,
             currentVote: null,
             previousVote: null
         }
+        localStorage.setItem("userId",userToSave.id);
         setCurrentUser(userToSave)
     }
 

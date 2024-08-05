@@ -34,7 +34,12 @@ function App() {
             nav("/game")
             socket.emit(events.userJoined, currentUser);
         } else if (currentUser == null) {
-            nav("/")
+            const userId = localStorage.getItem("userId");
+            if (userId != null) {
+                socket.emit("reconnect", userId);
+            } else {
+                nav("/")
+            }
         }
     }, [currentUser, nav])
 
@@ -42,6 +47,18 @@ function App() {
         socket.on(events.updateUsers, (newUsers: User[]) => {
             setCurrentUsers(newUsers);
         });
+
+        socket.on("reconnect", (user: User) => {
+            if (user != null) {
+                setCurrentUser(user)
+                localStorage.setItem("userId", user.id);
+                nav("/game");
+            }
+            else{
+                localStorage.removeItem("userId");
+                nav("/");
+            }
+        })
     }, [])
 
     const routes = <Routes>
